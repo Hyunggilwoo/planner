@@ -13,15 +13,21 @@ LIGHT_COLOR = 'AAAAAA'
 MEDIUM_COLOR = '888888'
 DARK_COLOR   = '000000'
 DATE_LONG = "%B %-d, %Y"
-OSX_FONT_PATH = "/System/Library/Fonts/Supplemental/Futura.ttc"
+
+UBUNTU_FONT_PATH = "/usr/share/fonts/truetype/ubuntu"
+UBUNTU_MONO_R = "/UbuntuMono-R.ttf"
+UBUNTU_MONO_RI = "/UbuntuMono-RI.ttf"
+UBUNTU_MONO_B = "/UbuntuMono-B.ttf"
+UBUNTU_C = "/Ubuntu-C.ttf"
 FONTS = {
-  'Futura' => {
-    normal: { file: OSX_FONT_PATH, font: 'Futura Medium' },
-    italic: { file: OSX_FONT_PATH, font: 'Futura Medium Italic' },
-    bold: { file: OSX_FONT_PATH, font: 'Futura Condensed ExtraBold' },
-    condensed: { file: OSX_FONT_PATH, font: 'Futura Condensed Medium' },
+  'Ubuntu' => {
+    normal: { file: UBUNTU_FONT_PATH + UBUNTU_MONO_R, font: 'Ubuntu-Mono-Regular' },
+    italic: { file: UBUNTU_FONT_PATH + UBUNTU_MONO_RI, font: 'Ubuntu-Mono-Italics' },
+    bold: { file: UBUNTU_FONT_PATH + UBUNTU_MONO_B, font: 'Ubuntu-Mono-Bold' },
+    condensed: { file: UBUNTU_FONT_PATH + UBUNTU_C, font: 'Ubuntu Condensed' },
   }
 }
+
 FILE_NAME = "time_block_pages.pdf"
 PAGE_SIZE = 'LETTER' # Could also do 'A4'
 # Order is top, right, bottom, left
