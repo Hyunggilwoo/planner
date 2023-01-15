@@ -482,20 +482,17 @@ Prawn::Document.generate(FILE_NAME, margin: RIGHT_PAGE_MARGINS, print_scaling: :
     end
 
     monday = sunday.next_day(1)
-    friday = sunday.next_day(5)
-    puts "Generate pages for week #{monday.strftime('%W')}: #{monday.strftime('%A, %B %-d, %Y')} through #{friday.strftime('%A, %B %-d, %Y')} in #{FILE_NAME}"
-    week_ahead_page monday, friday
+    sunday = sunday.next_day(7)
+    puts "Generate pages for week #{monday.strftime('%W')}: #{monday.strftime('%A, %B %-d, %Y')} through #{sunday.strftime('%A, %B %-d, %Y')} in #{FILE_NAME}"
+    week_ahead_page monday, sunday
 
-    # I just want week days
-    (1..5).each do |i|
+    # I want to measure my weekend too
+    (1..7).each do |i|
       day = sunday.next_day(i)
       daily_tasks_page day
       daily_calendar_page day
     end
 
-    weekend_page sunday.next_day(6), sunday.next_day(7)
-
-    sunday = sunday.next_day(7)
   end
 end
 
