@@ -482,7 +482,7 @@ Prawn::Document.generate(FILE_NAME, margin: RIGHT_PAGE_MARGINS, print_scaling: :
     end
 
     monday = sunday.next_day(1)
-    sunday = sunday.next_day(7)
+    # sunday = sunday.next_day(7)
     puts "Generate pages for week #{monday.strftime('%W')}: #{monday.strftime('%A, %B %-d, %Y')} through #{sunday.strftime('%A, %B %-d, %Y')} in #{FILE_NAME}"
     week_ahead_page monday, sunday
 
@@ -493,6 +493,7 @@ Prawn::Document.generate(FILE_NAME, margin: RIGHT_PAGE_MARGINS, print_scaling: :
       daily_calendar_page day
     end
 
+    sunday = monday.next_day(6)
   end
 end
 
