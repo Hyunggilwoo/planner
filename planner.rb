@@ -5,6 +5,7 @@ require 'prawn/measurement_extensions'
 require 'pry'
 require 'date'
 
+require_relative 'file_format'
 WEEKS = 1
 HOUR_LABELS = [nil, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, nil, nil]
 HOUR_COUNT = HOUR_LABELS.length
@@ -287,6 +288,7 @@ end
 def daily_calendar_page date
   begin_new_page :right
 
+  # initial values
   header_row_count = 2
   body_row_count = HOUR_COUNT * 2
   first_column = 0
@@ -303,6 +305,7 @@ def daily_calendar_page date
   left_subhed = date.strftime("Quarter #{quarter(date)} Week %W Day %j")
   # right_subhed = business_days_left_in_year(date)
   right_subhed = business_days_left_in_sprint(date)
+
   grid([0, first_column],[1, 1]).bounding_box do
     text left_header, size: 20, align: :left
   end
@@ -454,6 +457,53 @@ def weekend_page saturday, sunday
   end
 end
 
+
+def journal_page date
+'''
+Each day will have a page to write a journal.
+'''
+  last_column = COLUMN_COUNT - 1
+  first_column = 0
+  begin_new_page :left
+
+  header_row_count = 2
+  body_row_count = HOUR_COUNT * 2
+  last_row = header_row_count + body_row_count - 1
+
+  define_grid(columns: COLUMN_COUNT, rows: header_row_count + body_row_count, gutter: 0)
+  # grid.show_all
+
+  # Header
+  left_header = date.strftime(DATE_LONG) # date.strftime("Week %W")
+  right_header = date.strftime("%A") # date.strftime("Day %j")
+
+  # print right header and left header
+  grid([0, 2],[0, last_column]).bounding_box do
+    text right_header, size: 20, align: :right
+  end
+  grid([0, first_column],[1, 1]).bounding_box do
+    text left_header, size: 20, align: :left
+  end
+
+  # Horizontal lines
+  (5..last_row).each do |row|
+    grid([row, 0], [row, 3]).bounding_box do
+      stroke_line bounds.bottom_left, bounds.bottom_right
+    end
+  end
+
+  # Daily metrics
+  grid([1, 0], [4, 3]).bounding_box do
+    dash [1, 2]
+    stroke_bounds
+    undash
+
+    translate 10, -10 do
+      text "Journal", color: MEDIUM_COLOR
+    end
+  end
+end
+
 Prawn::Document.generate(FILE_NAME, margin: RIGHT_PAGE_MARGINS, print_scaling: :none) do
   font_families.update(FONTS)
   font(FONTS.keys.first)
@@ -491,6 +541,7 @@ Prawn::Document.generate(FILE_NAME, margin: RIGHT_PAGE_MARGINS, print_scaling: :
       day = sunday.next_day(i)
       daily_tasks_page day
       daily_calendar_page day
+      journal_page day
     end
 
     sunday = monday.next_day(6)
