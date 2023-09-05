@@ -29,7 +29,7 @@ FONTS = {
 }
 
 FILE_NAME = "time_block_pages.pdf"
-PAGE_SIZE = 'LETTER'
+PAGE_SIZE = 'A4'
 # Order is top, right, bottom, left
 LEFT_PAGE_MARGINS = [36, 72, 36, 36]
 RIGHT_PAGE_MARGINS = [36, 36, 36, 72]
@@ -454,7 +454,7 @@ def weekend_page saturday, sunday
   end
 end
 
-Prawn::Document.generate(FILE_NAME, margin: RIGHT_PAGE_MARGINS, print_scaling: :none) do
+Prawn::Document.generate(FILE_NAME, margin: RIGHT_PAGE_MARGINS, page_size: PAGE_SIZE, print_scaling: :none) do
   font_families.update(FONTS)
   font(FONTS.keys.first)
   stroke_color MEDIUM_COLOR
